@@ -16,6 +16,19 @@ class PropertyController extends Controller
         return view('property/index')->with('properties',$properties);
     }
 
+    public function show($id)
+    {
+        $property = DB::select("SELECT * FROM properties p WHERE p.id = ? and p.publicado = 1 and p.ativo = 1", [$id]);
+        if(!empty($property)){
+            return view('property/show')->with('property',$property);
+        }else{
+            return redirect()->action('PropertyController@index');
+        }
+
+        var_dump($property);
+        var_dump($id);
+    }
+
     public function create()
     {
         return view('property/create');
